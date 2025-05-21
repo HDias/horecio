@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   belongs_to :company
 
-  has_many :tweets
+  has_many :tweets, dependent: :destroy
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
 

@@ -1,0 +1,43 @@
+<h1>Companies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr id="<%= dom_id(company) %>">
+        <td><%= company.name %></td>
+        <td>
+          <%= link_to 'Show', company %>
+          <%= link_to 'Edit', edit_company_path(company) %>
+          <button onclick="deleteCompany('<%= company_path(company) %>', '<%= form_authenticity_token %>')">Delete</button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Company', new_company_path %>
+
+<script>
+function deleteCompany(url, token) {
+  if (confirm('Do you want to delete?')) {
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRF-Token': token,
+        'Content-Type': 'application/json'
+      }
+    }).then(function() {
+      window.location.reload();
+    });
+  }
+}
+</script>
